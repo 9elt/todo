@@ -35,12 +35,10 @@ A CLI tool to parse *todo notes* in any utf-8 file
 ```
 $ todo -e rs -r 4
 
- ./src/main.rs  
+./src/main.rs  
 │
-└── •1 
-│  implement some cache
+└─ᐅ 1  implement some cache
 │
-└── •2 
-   refactor main.rs mess
+└─ᐅ 2  refactor main.rs mess
 
 ```

@@ -26,8 +26,8 @@ impl ResultLogger {
             println!(
                 "{}\n{}{}{}",
                 priority.color("│"),
-                priority.color("└──"),
-                priority.background(format!("•{line}")),
+                priority.color("└─ᐅ"),
+                priority.background(line.to_string()),
                 self.message(message.to_owned(), next_priority)
             );
         }
@@ -47,11 +47,11 @@ impl ResultLogger {
             .filter(|v| v != &"")
             .collect::<Vec<&str>>();
 
-        let mut s = "".to_string();
+        let mut s = self.bold(lines[0]);
 
-        for i in 0..lines.len() {
+        for i in 1..lines.len() {
             s = format!(
-                "{s}\n{}  {}",
+                "{s}\n{} {}",
                 match next_priority {
                     Some(p) => p.color("│"),
                     None => " ".to_string()
@@ -64,6 +64,6 @@ impl ResultLogger {
     }
 
     fn bold<S: AsRef<str>>(&self, s: S) -> String {
-        format!("\x1b[1m{}\x1b[0m", s.as_ref())
+        format!("\x1b[1m {}\x1b[0m", s.as_ref())
     }
 }
