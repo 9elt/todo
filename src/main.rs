@@ -2,11 +2,11 @@
 // 
 // @todo @low {refactor main.rs mess}
 //
-// @todo {
+// @todo @high {
 //    you can reference lines: [77] will print line 77
 // }
 //
-// @todo @high {
+// @todo {
 //    or ranges: [100:103] to print lines 100 to 103
 // }
 

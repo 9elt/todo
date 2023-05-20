@@ -15,7 +15,7 @@ reference a line
 
 reference a range of lines
 ```
-@todo @low {some message}
+@todo @low {some message [from:to]}
 ```
 
 Spaces, new lines ,`/` and `#`, are ignored.  
@@ -38,10 +38,17 @@ The following syntax is valid and equivalent to the first example:
 
 `-i` show high priority only
 
+see [main.rs](./src/main.rs )
 ```
 $ todo -e rs -r 4
 
  ./src/main.rs  
+│
+└─ᐅ 5  you can reference lines:
+│  
+│   77|          let mut result = Parser::new(&file).parse();
+│  
+│  will print line 77
 │
 └─ᐅ 7  or ranges:
 │  
@@ -51,12 +58,6 @@ $ todo -e rs -r 4
 │  103|  }
 │  
 │  to print lines 100 to 103
-│
-└─ᐅ 5  you can reference lines:
-│  
-│   77|          let mut result = Parser::new(&file).parse();
-│  
-│  will print line 77
 │
 └─ᐅ 1  implement some cache
 │
