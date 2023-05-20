@@ -4,19 +4,19 @@ A CLI tool to parse [**todo notes syntax**](#todo-notes-syntax) in any utf-8 fil
 
 ## todo notes syntax
 
-To start a **todo note** use `@todo`, indicate an **optional** priority with `@high` or `@low`, finally provide a **message** wrapped by `{}`
+To start a **todo note** use **`@todo`**, indicate an **optional** priority with **`@high`** or **`@low`**, finally provide a **message** wrapped by **`{}`**
 
 ```
 @todo @high { some message }
 ```
 
-you can **reference a line** in the file using `[line-number]` or a **range** using `[from:to]`:
+you can **reference a line** in the file using **`[line-number]`** or a **range** using **`[from:to]`**:
 
 ```
 @todo { some message [12] [12:15] }
 ```
 
-references can be **RELATIVE** to the current line using `[+line-number]` or `[+from:+to]`:
+references can be **RELATIVE** to the current line using **`[+number]`** or **`[+from:+to]`**:
 
 ```
 @todo @low { some message [+1] [+1:+5] }
