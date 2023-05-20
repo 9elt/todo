@@ -42,3 +42,12 @@ $ todo -e rs -r 4
 └─ᐅ 2  refactor main.rs mess
 
 ```
+
+## installation
+
+```
+cargo install --git https://github.com/9elt/todo
+```
+
+see: 
+[**installing binaries with cargo install**](https://doc.rust-lang.org/book/ch14-04-installing-binaries.html), [**install rust and cargo**](https://doc.rust-lang.org/cargo/getting-started/installation.html)
