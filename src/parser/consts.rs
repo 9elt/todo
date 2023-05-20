@@ -9,3 +9,6 @@ pub const LOW: &[u8] = "low".as_bytes();
 
 pub const MSG_START: &u8 = &"{".as_bytes()[0];
 pub const MSG_END: &u8 = &"}".as_bytes()[0];
+
+pub const REF_START: &u8 = &"[".as_bytes()[0];
+pub const REF_END: &u8 = &"]".as_bytes()[0];

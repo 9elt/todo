@@ -7,14 +7,20 @@ A CLI tool to parse [todo notes](#todo-notes-syntax) in any utf-8 file
 ```
 @todo @high {some message}
 ```
+
+reference a line
 ```
-@todo {some message}
+@todo {some message [line]}
 ```
+
+reference a range of lines
 ```
 @todo @low {some message}
 ```
+
 Spaces, new lines ,`/` and `#`, are ignored.  
 The following syntax is valid and equivalent to the first example:
+
 ```rust
 // @todo   @high
 // {
@@ -35,11 +41,26 @@ The following syntax is valid and equivalent to the first example:
 ```
 $ todo -e rs -r 4
 
-./src/main.rs  
+ ./src/main.rs  
+│
+└─ᐅ 7  or ranges:
+│  
+│  100|  fn relative_path(cd: &PathBuf, path: &Path) -> String {
+│  101|      path.to_string_lossy()
+│  102|          .replace(cd.to_string_lossy().as_ref(), ".")
+│  103|  }
+│  
+│  to print lines 100 to 103
+│
+└─ᐅ 5  you can reference lines:
+│  
+│   77|          let mut result = Parser::new(&file).parse();
+│  
+│  will print line 77
 │
 └─ᐅ 1  implement some cache
 │
-└─ᐅ 2  refactor main.rs mess
+└─ᐅ 3  refactor main.rs mess
 
 ```
 
