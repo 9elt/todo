@@ -1,8 +1,8 @@
 # todo
 
-A CLI tool to parse *todo notes* in any utf-8 file
+A CLI tool to parse [todo notes](#todo-notes-syntax) in any utf-8 file
 
-### todo notes syntax:
+## todo notes syntax
 
 ```
 @todo @high {some message}
@@ -13,16 +13,16 @@ A CLI tool to parse *todo notes* in any utf-8 file
 ```
 @todo @low {some message}
 ```
-*Spaces, new lines ,`/` and `#`, are ignored*, so the following syntax is valid:
+Spaces, new lines ,`/` and `#`, are ignored.  
+The following syntax is valid and equivalent to the first example:
 ```rust
-// @todo
-// @high
+// @todo   @high
 // {
 //   some message
 // }
 ```
 
-### basic usage
+## CLI usage
 
 `-r` recursion max depth *(defaults to 5)*
 
