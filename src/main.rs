@@ -6,7 +6,7 @@
 //    or ranges: [97:100] to print lines 97 to 100
 // }
 
-// @todo @low {reference next 2 lines [+1:+2]}
+// @todo @low {reference the next 2 lines [+1:+2]}
 mod parser;
 mod util;
 

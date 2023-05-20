@@ -10,13 +10,13 @@ To start a **todo note** use **`@todo`**, indicate an **optional** priority with
 @todo @high { some message }
 ```
 
-you can **reference a line** in the file using **`[line-number]`** or a **range** using **`[from:to]`**:
+You can **reference a line** in the file using **`[line-number]`** or a **range** using **`[from:to]`**:
 
 ```
 @todo { some message [12] [12:15] }
 ```
 
-references can be **RELATIVE** to the current line using **`[+number]`** or **`[+from:+to]`**:
+References can be **RELATIVE** to the current line using **`[+number]`** or **`[+from:+to]`**:
 
 ```
 @todo @low { some message [+1] [+1:+5] }
@@ -64,7 +64,7 @@ The output of [**main.rs**](./src/main.rs ) todo notes:
 │  
 │  to print lines 97 to 100
 │
-└─ᐅ 9  reference next 2 lines
+└─ᐅ 9  reference the next 2 lines
    
     10|  mod parser;
     11|  mod util;
