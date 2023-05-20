@@ -45,18 +45,19 @@ impl ResultLogger {
             .lines()
             .map(|v| v.trim())
             .filter(|v| v != &"")
-            .collect::<Vec<&str>>();
+            .map(|v| self.replace_refs(v))
+            .collect::<Vec<String>>();
 
-        let mut s = self.bold(lines[0]);
+        let mut s = self.bold(&lines[0]);
 
         for i in 1..lines.len() {
             s = format!(
                 "{s}\n{} {}",
                 match next_priority {
                     Some(p) => p.color("│"),
-                    None => " ".to_string()
+                    None => " ".to_string(),
                 },
-                self.bold(lines[i])
+                self.bold(&lines[i])
             );
         }
 
@@ -65,5 +66,12 @@ impl ResultLogger {
 
     fn bold<S: AsRef<str>>(&self, s: S) -> String {
         format!("\x1b[1m {}\x1b[0m", s.as_ref())
+    }
+
+    fn replace_refs(&self, v: &str) -> String {
+        v.replace("ref*", "\x1b[0m")
+            .replace("*ref", "\x1b[0m")
+            .replace("lcnt*", "\x1b[0m\x1b[38;5;240m")
+            .replace("*lcnt", "|\x1b[0m")
     }
 }

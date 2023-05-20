@@ -1,6 +1,12 @@
-// @todo @high {implement some cache}
-// @todo @low {refactor main.rs mess}
+// @todo @high {
+//    you can reference lines: [74] will print line 74
+// }
 
+// @todo {
+//    or ranges: [97:100] to print lines 97 to 100
+// }
+
+// @todo @low {reference the next 2 lines [+1:+2]}
 mod parser;
 mod util;
 
@@ -56,18 +62,16 @@ fn main() {
             }
         }
 
-        let filestr = match fs::read_to_string(path) {
+        let file = match fs::read_to_string(path) {
             Ok(str) => str,
             Err(_) => continue,
         };
 
-        if !filestr.contains("@todo") {
+        if !file.contains("@todo") {
             continue;
         }
 
-        let file = filestr.as_bytes();
-
-        let mut result = Parser::new(file.iter()).parse();
+        let mut result = Parser::new(&file).parse();
 
         if result.len() == 0 {
             continue;
