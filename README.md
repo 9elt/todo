@@ -4,18 +4,22 @@ A CLI tool to parse [todo notes](#todo-notes-syntax) in any utf-8 file
 
 ## todo notes syntax
 
+to start a **todo note** use `@todo`,  
+then indicate an **optional priority** `@high` or `@low`,  
+finally provide a **message** wrapped in `{}`
+
 ```
 @todo @high {some message}
 ```
 
-reference a line
+you can also **reference a line** in the file
 ```
-@todo {some message [line]}
+@todo {some message [line-number]}
 ```
 
-reference a range of lines
+or reference a **range of lines**
 ```
-@todo @low {some message [from:to]}
+@todo @low {some message [from-line:to-line]}
 ```
 
 Spaces, new lines ,`/` and `#`, are ignored.  
@@ -38,10 +42,11 @@ The following syntax is valid and equivalent to the first example:
 
 `-i` show high priority only
 
-see [main.rs](./src/main.rs )
 ```
 $ todo -e rs -r 4
-
+```
+output of [main.rs](./src/main.rs ) todo notes
+```
  ./src/main.rs  
 │
 └─ᐅ 5  you can reference lines:
