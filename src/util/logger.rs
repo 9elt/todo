@@ -1,109 +1,69 @@
-// @todo @low {fix single line message starting with \n}
+use crate::parser::priority::Priority;
 
-use super::colors::{blue, bold, gray, red};
-
-pub struct Logger {
-    high: usize,
-    normal: usize,
-    low: usize,
-    curr: usize,
+pub struct ResultLogger {
+    result: Vec<(String, u32, Priority)>,
 }
 
-const LABELS: [&str; 3] = ["IMPORTANT", "TODOs", "OTHER"];
-
-impl Logger {
-    pub fn new(high: usize, normal: usize, low: usize) -> Self {
-        Self {
-            high,
-            normal,
-            low,
-            curr: 0,
-        }
+impl ResultLogger {
+    pub fn new(result: Vec<(String, u32, Priority)>) -> Self {
+        Self { result }
     }
 
-    pub fn filname<S: AsRef<str>>(&mut self, name: S) -> &mut Self {
-        println!("\n{} ", self.color(name, true));
+    pub fn filname<S: AsRef<str>>(&self, name: S) -> &Self {
+        println!("\n{} ", self.result[0].2.background(name));
         self
     }
 
-    pub fn res(&mut self, res: Vec<(String, u32)>) -> &mut Self {
-        if res.len() == 0 {
-            self.curr += 1;
-            return self
-        }
+    pub fn res(&self) -> &Self {
+        for i in 0..self.result.len() {
+            let (message, line, priority) = &self.result[i];
 
-        println!(
-            "{}\n{}{} ",
-            self.color("│", false),
-            self.color("└──", false),
-            self.color(LABELS[self.curr], true)
-        );
+            let next_priority = match i + 1 < self.result.len() {
+                true => Some(&self.result[i + 1].2),
+                false => None,
+            };
 
-        for (message, line) in res {
             println!(
-                "{}  {} line {line}:\n{}{:04}{}",
-                self.next_color("│", false),
-                self.color("✪", false),
-                self.next_color("│", false),
-                " ",
-                self.message(message)
+                "{}\n{}{}{}",
+                priority.color("│"),
+                priority.color("└──"),
+                priority.background(format!("•{line}")),
+                self.message(message.to_owned(), next_priority)
             );
         }
 
-        self.curr += 1;
         self
     }
 
-    pub fn line(&mut self) -> &mut Self {
+    pub fn line(&self) -> &Self {
         println!();
         self
     }
 
-    fn message(&mut self, message: String) -> String {
-        let lines = message.lines().collect::<Vec<&str>>();
+    fn message(&self, message: String, next_priority: Option<&Priority>) -> String {
+        let lines = message
+            .lines()
+            .map(|v| v.trim())
+            .filter(|v| v != &"")
+            .collect::<Vec<&str>>();
 
-        let mut i = 0;
-        let mut l = lines[i].trim();
-        while i < lines.len() - 1 && l == "" {
-            l = lines[i].trim();
-            i += 1;
-        }
+        let mut s = "".to_string();
 
-        let mut s = bold(l);
-
-        if i == 0 {
-            i += 1;
-        }
-
-        for i in i..lines.len() {
+        for i in 0..lines.len() {
             s = format!(
-                "{s}\n{}{:04}{}",
-                self.next_color("│", false),
-                " ",
-                bold(lines[i].trim())
-            ); 
+                "{s}\n{}  {}",
+                match next_priority {
+                    Some(p) => p.color("│"),
+                    None => " ".to_string()
+                },
+                self.bold(lines[i])
+            );
         }
 
         s
     }
 
-    fn color<S: AsRef<str>>(&mut self, text: S, bg: bool) -> String {
-        self.any_color(text, bg, self.curr)
-    }
-
-    fn next_color<S: AsRef<str>>(&mut self, text: S, bg: bool) -> String {
-        self.any_color(text, bg, self.curr + 1)
-    }
-
-    fn any_color<S: AsRef<str>>(&mut self, text: S, bg: bool, curr: usize) -> String {
-        if curr < 1 && self.high > 0 {
-            format!("{}", red(text, bg))
-        } else if curr < 2 && self.normal > 0 {
-            format!("{}", blue(text, bg))
-        } else if curr < 3 && self.low > 0 {
-            format!("{}", gray(text, bg))
-        } else {
-            format!(" ")
-        }
+    fn bold<S: AsRef<str>>(&self, s: S) -> String {
+        format!("\x1b[1m{}\x1b[0m", s.as_ref())
     }
 }

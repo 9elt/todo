@@ -1,12 +1,15 @@
+// @todo @high {implement some cache}
+// @todo @low {refactor main.rs mess}
+
 mod parser;
 mod util;
 
 use clap::Parser as ClapParser;
-use parser::parse;
+use parser::Parser;
 use std::env::current_dir;
 use std::fs;
 use std::path::{Path, PathBuf};
-use util::logger::Logger;
+use util::logger::ResultLogger;
 use walkdir::WalkDir;
 
 fn main() {
@@ -64,29 +67,25 @@ fn main() {
 
         let file = filestr.as_bytes();
 
-        let high = parse(file, "@todo @high {", "}");
+        let mut result = Parser::new(file.iter()).parse();
 
-        let normal = match args.important_only {
-            false => parse(file, "@todo {", "}"),
-            true => vec![],
-        };
-
-        let low = match args.important_only {
-            false => parse(file, "@todo @low {", "}"),
-            true => vec![],
-        };
-
-        if high.len() == 0 && normal.len() == 0 && low.len() == 0 {
+        if result.len() == 0 {
             continue;
         }
 
-        let mut logger = Logger::new(high.len(), normal.len(), low.len());
+        result.sort_by_key(|(_, _, p)| p.to_u8());
 
-        logger
+        if args.important_only {
+            result = result
+                .iter()
+                .filter(|(_, _, p)| p.is_high())
+                .map(|v| v.to_owned())
+                .collect();
+        }
+
+        ResultLogger::new(result)
             .filname(relative_path(&cdd, path))
-            .res(high)
-            .res(normal)
-            .res(low)
+            .res()
             .line();
     }
 }

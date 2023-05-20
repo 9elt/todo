@@ -25,20 +25,14 @@ notes syntax:
 `-i` show high priority only
 
 ```
-$ todo -e ts tsx -r 4
+$ todo -e rs -r 4
 
-.ts-project/src/app.ts 
+ ./src/main.rs  
 │
-└── IMPORTANT  
-│  ✪ line 67:
-│     this is an high priority todo
+└── •1 
+│  implement some cache
 │
-└── TODOs  
-│  ✪ line 20:
-│     this is a normal priority todo 
-│
-└── OTHER  
-   ✪ line 75:
-      this is a low priority todo 
+└── •2 
+   refactor main.rs mess
 
 ```
