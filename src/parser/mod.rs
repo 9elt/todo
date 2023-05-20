@@ -119,6 +119,8 @@ impl<'a> Parser<'a> {
             None => return self.result.to_owned(),
         };
 
+        self.incr_line(t);
+
         let mut msg = vec![];
 
         let mut pushref = false;
@@ -144,6 +146,8 @@ impl<'a> Parser<'a> {
                 Some(t) => t,
                 None => return self.result.to_owned(),
             };
+
+            self.incr_line(t);
         }
 
         let mut message = String::from_utf8(msg).unwrap_or("failed parsing message".to_string());
@@ -157,13 +161,24 @@ impl<'a> Parser<'a> {
         self.parse()
     }
 
+    fn parse_ln_num(&self, v: &str) -> Result<u32, std::num::ParseIntError> {
+        if v.contains("+") {
+            match u32::from_str_radix(&v.replace("+", ""), 10) {
+                Ok(ln) => Ok(self.line + ln),
+                Err(err) => Err(err)
+            }
+        } else {
+            u32::from_str_radix(v, 10)
+        }
+    }
+
     fn replace_refs(&mut self, message: &mut String, refs: Vec<Vec<u8>>) {
         for reference in refs {
             let ref_str = String::from_utf8(reference).unwrap();
 
             let r = ref_str
                 .split(":")
-                .map(|v| u32::from_str_radix(v, 10))
+                .map(|v| self.parse_ln_num(v))
                 .filter_map(|v| v.ok())
                 .collect::<Vec<u32>>();
 

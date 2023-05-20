@@ -1,29 +1,28 @@
 # todo
 
-A CLI tool to parse [todo notes](#todo-notes-syntax) in any utf-8 file
+A CLI tool to parse [**todo notes syntax**](#todo-notes-syntax) in any utf-8 file
 
 ## todo notes syntax
 
-to start a **todo note** use `@todo`,  
-then indicate an **optional priority** `@high` or `@low`,  
-finally provide a **message** wrapped in `{}`
+To start a **todo note** use `@todo`, indicate an **optional** priority with `@high` or `@low`, finally provide a **message** wrapped by `{}`
 
 ```
-@todo @high {some message}
+@todo @high { some message }
 ```
 
-you can also **reference a line** in the file
+you can **reference a line** in the file using `[line-number]` or a **range** using `[from:to]`:
+
 ```
-@todo {some message [line-number]}
+@todo { some message [12] [12:15] }
 ```
 
-or reference a **range of lines**
+references can be **RELATIVE** to the current line using `[+line-number]` or `[+from:+to]`:
+
 ```
-@todo @low {some message [from-line:to-line]}
+@todo @low { some message [+1] [+1:+5] }
 ```
 
-Spaces, new lines ,`/` and `#`, are ignored.  
-The following syntax is valid and equivalent to the first example:
+Spaces, new lines ,`/` and `#`, are ignored. The following syntax is **valid** and equivalent to the first example:
 
 ```rust
 // @todo   @high
@@ -45,28 +44,30 @@ The following syntax is valid and equivalent to the first example:
 ```
 $ todo -e rs -r 4
 ```
-output of [main.rs](./src/main.rs ) todo notes
+
+The output of [**main.rs**](./src/main.rs ) todo notes:
 ```
  ./src/main.rs  
 │
-└─ᐅ 5  you can reference lines:
+└─ᐅ 3  you can reference lines:
 │  
-│   77|          let mut result = Parser::new(&file).parse();
+│   74|          let mut result = Parser::new(&file).parse();
 │  
-│  will print line 77
+│  will print line 74
 │
 └─ᐅ 7  or ranges:
 │  
-│  100|  fn relative_path(cd: &PathBuf, path: &Path) -> String {
-│  101|      path.to_string_lossy()
-│  102|          .replace(cd.to_string_lossy().as_ref(), ".")
-│  103|  }
+│   97|  fn relative_path(cd: &PathBuf, path: &Path) -> String {
+│   98|      path.to_string_lossy()
+│   99|          .replace(cd.to_string_lossy().as_ref(), ".")
+│  100|  }
 │  
-│  to print lines 100 to 103
+│  to print lines 97 to 100
 │
-└─ᐅ 1  implement some cache
-│
-└─ᐅ 3  refactor main.rs mess
+└─ᐅ 9  reference next 2 lines
+   
+    10|  mod parser;
+    11|  mod util;
 
 ```
 

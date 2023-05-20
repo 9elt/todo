@@ -1,15 +1,12 @@
-// @todo @low {implement some cache}
-// 
-// @todo @low {refactor main.rs mess}
-//
 // @todo @high {
-//    you can reference lines: [77] will print line 77
-// }
-//
-// @todo {
-//    or ranges: [100:103] to print lines 100 to 103
+//    you can reference lines: [74] will print line 74
 // }
 
+// @todo {
+//    or ranges: [97:100] to print lines 97 to 100
+// }
+
+// @todo @low {reference next 2 lines [+1:+2]}
 mod parser;
 mod util;
 
