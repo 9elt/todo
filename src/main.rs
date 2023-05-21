@@ -1,4 +1,4 @@
-// @todo @high {
+// @todo {
 //    you can reference lines: [74] will print line 74
 // }
 
@@ -74,6 +74,10 @@ fn main() {
         let mut result = Parser::new(&file).parse();
 
         if result.len() == 0 {
+            println!(
+                "\n\x1b[33mWARNING a @todo was found in {}, but no notes where parsed\x1b[0m\n",
+                relative_path(&cdd, path)
+            );
             continue;
         }
 
