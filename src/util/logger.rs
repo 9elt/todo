@@ -75,3 +75,7 @@ impl ResultLogger {
             .replace("*lcnt", "|\x1b[0m")
     }
 }
+
+pub fn missing_todo(path: &String) {
+    println!("\x1b[33;1mWARNING\x1b[0m\x1b[33ma @todo was found in {path}, but no notes where parsed\x1b[0m")
+}

@@ -11,6 +11,10 @@ pub struct Args {
     #[arg(short, long)]
     pub important_only: bool,
 
+    /// Suppress warnings
+    #[arg(long)]
+    pub silent: bool,
+
     /// Target a directory (from current dir)
     #[arg(short, long)]
     pub dir: Option<String>,
