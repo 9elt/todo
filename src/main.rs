@@ -21,6 +21,9 @@ use walkdir::WalkDir;
 use crate::util::logger;
 
 fn main() {
+    parser::test();
+    return;
+
     let args = util::args::Args::parse();
 
     let max_depth = match args.recursion {
